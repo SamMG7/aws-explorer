@@ -8,13 +8,26 @@ import { ServiceDetails } from '../panels/ServiceDetails';
 import { CATEGORY_COLOR, SERVICE_ICONS } from '../icons/serviceVisuals';
 
 const CATEGORY_ORDER: ServiceCategory[] = [
-  'redes',
+  'concepto',
   'computo',
+  'contenedores',
+  'serverless',
   'almacenamiento',
   'base-de-datos',
+  'redes',
   'seguridad',
   'administracion',
-  'concepto',
+  'finanzas',
+  'soporte',
+  'analitica',
+  'integracion',
+  'aplicaciones',
+  'ia',
+  'migracion',
+  'desarrollo',
+  'escritorio',
+  'frontend',
+  'iot',
   'actor',
 ];
 

@@ -1,4 +1,10 @@
 import type { ServiceCategory, ServiceId, ServiceInfo } from '../types/service';
+import { STORAGE_DATABASE } from './clf-c02/storageDatabase';
+import { COMPUTE_NETWORKING } from './clf-c02/computeNetworking';
+import { ANALYTICS_APPS } from './clf-c02/analyticsApps';
+import { BILLING_SUPPORT_DEV } from './clf-c02/billingSupportDev';
+import { ML_MANAGEMENT_MIGRATION } from './clf-c02/mlManagementMigration';
+import { SECURITY_CONCEPTS } from './clf-c02/securityConcepts';
 
 export const SERVICE_CATEGORY_LABELS: Record<ServiceCategory, string> = {
   actor: 'Actor',
@@ -9,6 +15,19 @@ export const SERVICE_CATEGORY_LABELS: Record<ServiceCategory, string> = {
   seguridad: 'Seguridad, identidad y cumplimiento',
   administracion: 'Administración y gobierno',
   concepto: 'Concepto',
+  analitica: 'Analítica',
+  integracion: 'Integración de aplicaciones',
+  aplicaciones: 'Aplicaciones empresariales',
+  finanzas: 'Administración financiera de la nube',
+  contenedores: 'Contenedores',
+  serverless: 'Serverless',
+  soporte: 'Soporte y habilitación',
+  desarrollo: 'Herramientas para desarrolladores',
+  escritorio: 'Computación para usuarios finales',
+  frontend: 'Frontend web y móvil',
+  iot: 'Internet de las cosas (IoT)',
+  ia: 'Machine learning e IA',
+  migracion: 'Migración y transferencia',
 };
 
 /**
@@ -497,6 +516,14 @@ export const SERVICES: Record<ServiceId, ServiceInfo> = {
     considerations: ['Se cobra por elemento de configuración registrado y por evaluación de reglas.'],
     docsUrl: 'https://aws.amazon.com/config/',
   },
+
+  // Temario CLF-C02 (fichas de catálogo; ver src/data/clf-c02/)
+  ...STORAGE_DATABASE,
+  ...COMPUTE_NETWORKING,
+  ...ANALYTICS_APPS,
+  ...BILLING_SUPPORT_DEV,
+  ...ML_MANAGEMENT_MIGRATION,
+  ...SECURITY_CONCEPTS,
 };
 
 export function getService(id: ServiceId): ServiceInfo {

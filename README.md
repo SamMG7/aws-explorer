@@ -17,7 +17,9 @@ Plataforma educativa interactiva para aprender Amazon Web Services observando ar
 | 5 | EC2 Auto Scaling | EC2, Auto Scaling, ELB, CloudWatch (scale out y scale in) | 9 |
 | 6 | Monitoreo y auditoría | CloudWatch, CloudTrail, AWS Config, GuardDuty (flujos paralelos) | 9 |
 
-Además hay un **glosario de servicios** (pestaña “Servicios”) con 27 fichas: definición, función principal, casos de uso, servicios relacionados, confusiones frecuentes y consideraciones.
+Además hay un **glosario de servicios** (pestaña “Servicios”) con **157 fichas** que cubren todos los servicios de la [lista oficial del examen CLF-C02](https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/clf-02-in-scope-services.html) y los conceptos clave del temario (responsabilidad compartida, Well-Architected, CAF, modelos de precios, alta disponibilidad, RTO/RPO, entre otros). Cada ficha incluye definición, función principal, casos de uso, servicios relacionados, confusiones frecuentes y consideraciones. El detalle está en [`src/data/CLF_C02_COVERAGE.md`](src/data/CLF_C02_COVERAGE.md).
+
+Las simulaciones animadas cubren los 6 escenarios de la tabla; el resto de los servicios tiene ficha de estudio, pero todavía no tiene simulación.
 
 ## Requisitos
 
@@ -45,7 +47,7 @@ npm test
 npm run typecheck
 ```
 
-La suite (Vitest + Testing Library, 57 pruebas) cubre: cambio de escenario, avance y retroceso, pausa y reanudación, reinicio, finalización, cambio de velocidad, cancelación de temporizadores, integridad de los datos de los seis escenarios, construcción del diagrama e integración de la interfaz (catálogo, controles, atajos, buscador, glosario).
+La suite (Vitest + Testing Library, 235 pruebas) cubre: cambio de escenario, avance y retroceso, pausa y reanudación, reinicio, finalización, cambio de velocidad, cancelación de temporizadores, integridad de los datos de los seis escenarios, construcción del diagrama, integración de la interfaz (catálogo, controles, atajos, buscador, glosario) y **cobertura del temario**: falla si un servicio de la lista oficial del CLF-C02 queda sin ficha, si una ficha referencia un servicio inexistente o si contiene texto de relleno.
 
 ## Build de producción
 
@@ -95,7 +97,10 @@ src/
 │   ├── useSimulation.ts      Puente con React (useSyncExternalStore)
 │   └── stepView.ts           Normaliza conexiones activas y visibilidad por paso
 ├── data/
-│   ├── services.ts           Fichas educativas (Record<ServiceId, ServiceInfo>)
+│   ├── services.ts           Fichas de los escenarios + unión del catálogo (Record<ServiceId, ServiceInfo>)
+│   ├── clf-c02/              Fichas del temario CLF-C02 por bloque temático
+│   ├── catalog.test.ts       Cobertura de la lista oficial y calidad de las fichas
+│   ├── CLF_C02_COVERAGE.md   Cobertura del temario, generada a partir del catálogo
 │   ├── categories.ts
 │   ├── validateScenario.ts   Integridad referencial de un escenario
 │   └── scenarios/            Un archivo por escenario + registro y búsqueda (index.ts)
@@ -138,7 +143,7 @@ Un escenario es un objeto TypeScript (`src/types/scenario.ts`):
 
 1. Crea `src/data/scenarios/mi-escenario.ts` exportando un `Scenario`.
 2. Agrégalo al arreglo `SCENARIOS` de `src/data/scenarios/index.ts`.
-3. Si usa un servicio nuevo, añade su id a `SERVICE_IDS` (`src/types/service.ts`); TypeScript exigirá su ficha en `services.ts` y su icono en `serviceVisuals.ts`.
+3. Si usa un servicio nuevo, añade su id a `SERVICE_IDS` (`src/types/service.ts`); TypeScript exigirá su ficha (en `services.ts` o en `src/data/clf-c02/`) y su icono en `serviceVisuals.ts`.
 4. Ejecuta `npm test`: la prueba de integridad detecta nodos, conexiones o servicios inexistentes, textos faltantes y padres mal declarados. En desarrollo, los problemas también aparecen en la consola.
 
 No hay que tocar el motor ni los componentes.
@@ -160,7 +165,8 @@ El contenido usa la terminología oficial de AWS. Cada escenario declara sus **s
 - Contenido revisado con base en documentación pública de AWS, pero **sin revisión externa** por un instructor certificado; los servicios evolucionan y conviene revisarlo periódicamente.
 - Diagramas con posiciones fijas definidas a mano; no hay disposición automática.
 - En pantallas muy pequeñas el diagrama se ve reducido (se puede hacer zoom); el texto de los nodos no se adapta al zoom.
-- El paquete JavaScript pesa ~545 KB (~170 KB gzip) por React Flow; no hay división de código.
+- El paquete JavaScript pesa ~680 KB (~210 KB gzip) por React Flow y el catálogo de 157 fichas; no hay división de código.
+- La lista oficial del CLF-C02 cambia con el tiempo (por ejemplo, Amazon QuickSight ahora forma parte de Amazon Quick). Conviene revisar `catalog.test.ts` y las fichas cuando AWS la actualice.
 - Sin traducción a otros idiomas (todo el contenido está en español dentro de los datos).
 - Solo se recuerdan tema y velocidad (localStorage); no hay progreso académico ni cuenta de usuario (fuera del alcance del MVP).
 - Los nodos del diagrama no se pueden reordenar arrastrándolos (decisión deliberada para mantener el encuadre de la lección).

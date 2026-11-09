@@ -25,6 +25,11 @@
   --cat-admin: #f472b6;
   --cat-actor: #94a3b8;
   --cat-concepto: #22d3ee;
+  --cat-analitica: #38bdf8;
+  --cat-integracion: #fb7185;
+  --cat-finanzas: #a3e635;
+  --cat-ia: #c084fc;
+  --cat-migracion: #fbbf24;
   color-scheme: dark;
 }
 
@@ -49,6 +54,11 @@
   --cat-admin: #be185d;
   --cat-actor: #475569;
   --cat-concepto: #0e7490;
+  --cat-analitica: #0369a1;
+  --cat-integracion: #be123c;
+  --cat-finanzas: #4d7c0f;
+  --cat-ia: #7e22ce;
+  --cat-migracion: #b45309;
   color-scheme: light;
 }
 
